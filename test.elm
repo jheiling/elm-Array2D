@@ -23,6 +23,8 @@ main =
   , ("foldr",(foldr (::) [] (initialize 2 3 (,)) == [(0,0),(0,1),(0,2),(1,0),(1,1),(1,2)]))
   , ("fromArrayWithDefault",(fromArrayWithDefault 2 3 -1 (Array.fromList [0,1,2,3]) == Array.fromList [Array.fromList [0,1,2],Array.fromList [3,-1,-1]]))
   , ("fromListWithDefault",(fromListWithDefault 2 3 -1 [0,1,2,3] == Array.fromList [Array.fromList [0,1,2],Array.fromList [3,-1,-1]]))
+  , ("toList",(toList (initialize 2 3 (,)) == [(0,0),(0,1),(0,2),(1,0),(1,1),(1,2)]))
+  , ("toArray",(toArray (initialize 2 3 (,)) == Array.fromList [(0,0),(0,1),(0,2),(1,0),(1,1),(1,2)]))
   ]
   |> List.map (\(t,r) -> flow right [t ++ ": " |> fromString |> leftAligned,asText r])
   |> flow down

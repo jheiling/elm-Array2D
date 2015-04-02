@@ -17,13 +17,14 @@ module Array2D where
 @docs map, indexedMap, foldl, foldr
 
 # Conversion
-@docs fromArrayWithDefault, fromListWithDefault
+@docs fromListWithDefault, fromArrayWithDefault, toList, toArray
 
 -}
 
 import Array
 import Array (Array)
 import Debug
+import List
 import Maybe
 
 {-| Alias for Array (Array a)
@@ -124,17 +125,14 @@ foldl f = Array.foldl (flip (Array.foldl f))
 foldr : (a -> b -> b) -> b -> Array2D a -> b
 foldr f = Array.foldr (flip (Array.foldr f))
 
-{- doesn't work, probably a bug in Array.append: https://github.com/elm-lang/core/issues/205
-{-|
--}
-toArray : Array2D a -> Array a
-toArray = Array.foldl (flip Array.append) Array.empty
+{-| Create a 2-dimensional array with the given dimensions, initialized with the elements of the given list.
+If the list is too short the rest is initialized with a default element.
+The order in which the elements are initialized is (0, 0), (0, 1) .. (0, m) .. (n, 0), (n, 1) .. (n, m).
 
-{-|
+    fromListWithDefault 2 3 -1 [0,1,2,3] == Array.fromList [Array.fromList [0,1,2],Array.fromList [3,-1,-1]]
 -}
-toList : Array2D a -> List a
-toList = toArray >> Array.toList
--}
+fromListWithDefault : Int -> Int -> a -> List a -> Array2D a
+fromListWithDefault n m def = Array.fromList >> fromArrayWithDefault n m def
 
 {-| Create a 2-dimensional array with the given dimensions, initialized with the elements of the given array.
 If the array is too short the rest is initialized with a default element.
@@ -145,11 +143,20 @@ The order in which the elements are initialized is (0, 0), (0, 1) .. (0, m) .. (
 fromArrayWithDefault : Int -> Int -> a -> Array a -> Array2D a
 fromArrayWithDefault n m def xs = initialize n m (\i j -> Maybe.withDefault def (Array.get (i * m + j) xs))
 
-{-| Create a 2-dimensional array with the given dimensions, initialized with the elements of the given list.
-If the list is too short the rest is initialized with a default element.
-The order in which the elements are initialized is (0, 0), (0, 1) .. (0, m) .. (n, 0), (n, 1) .. (n, m).
+{-| Create a list from the given array.
+The order of elements is (0, 0), (0, 1) .. (0, m) .. (n, 0), (n, 1) .. (n, m).
 
-    fromListWithDefault 2 3 -1 [0,1,2,3] == Array.fromList [Array.fromList [0,1,2],Array.fromList [3,-1,-1]]
+    toList (initialize 2 3 (,)) == [(0,0),(0,1),(0,2),(1,0),(1,1),(1,2)]
 -}
-fromListWithDefault : Int -> Int -> a -> List a -> Array2D a
-fromListWithDefault n m def = Array.fromList >> fromArrayWithDefault n m def
+toList : Array2D a -> List a
+toList = Array.toList >> List.map Array.toList >> List.concat
+
+{-| Create an array from the given 2-dimensional array.
+The order of elements is (0, 0), (0, 1) .. (0, m) .. (n, 0), (n, 1) .. (n, m).
+
+    toArray (initialize 2 3 (,)) == Array.fromList [(0,0),(0,1),(0,2),(1,0),(1,1),(1,2)]
+-}
+toArray : Array2D a -> Array a
+toArray = toList >> Array.fromList
+{- causes a bug: https://github.com/elm-lang/core/issues/205
+toArray = Array.foldl (flip Array.append) Array.empty -}
