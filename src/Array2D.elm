@@ -1,6 +1,9 @@
 module Array2D where
 {-| Module for working with 2-dimensional jagged arrays
 
+# Definition
+@docs Array2D
+
 # Creating
 @docs repeat, initialize
 
@@ -23,6 +26,8 @@ import Array (Array)
 import Debug
 import Maybe
 
+{-| Alias for Array (Array a)
+-}
 type alias Array2D a = Array (Array a)
 
 {-| Create a 2-dimensional array with the given dimensions, filled with a default element.
