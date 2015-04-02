@@ -1,0 +1,15 @@
+{
+    "version": "0.0.1",
+    "summary": "Functions for working with 2-dimensional arrays.",
+    "repository": "https://github.com/USER/PROJECT.git",
+    "license": "MIT",
+    "source-directories": [
+        "src"
+    ],
+    "exposed-modules": [
+      "Array2D"
+    ],
+    "dependencies": {
+        "elm-lang/core": "1.1.1 <= v < 2.0.0"
+    }
+}
