@@ -8,7 +8,7 @@ module Array2D where
 @docs length1, length
 
 # Get and Set
-@docs get, getWithDefault, set
+@docs get, getUnsafe, getWithDefault, set
 
 # Higher order functions
 @docs foldl
@@ -20,6 +20,7 @@ module Array2D where
 
 import Array
 import Array (Array)
+import Debug
 import Maybe
 
 type alias Array2D a = Array (Array a)
@@ -62,6 +63,14 @@ get i j xs =
   case Array.get i xs of
     Just ys -> Array.get j ys
     Nothing -> Nothing
+
+{-| Return the element at the index or crash if the index is out of range.
+-}
+getUnsafe : Int -> Int -> Array2D a -> a
+getUnsafe i j xs =
+  case get i j xs of
+    Just x -> x
+    Nothing -> Debug.crash ("Index " ++ toString i ++ " " ++ toString j ++ " is out of range.")
 
 {-| Return the element at the index or a default value if the index is out of range.
 

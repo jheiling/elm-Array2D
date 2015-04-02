@@ -12,6 +12,7 @@ main =
   , ("length",(length (repeat 2 3 0) == 6))
   , ("get 1",(get 1 1 (initialize 2 3 (,)) == Just (1,1)))
   , ("get 2",(get 3 1 (initialize 2 3 (,)) == Nothing))
+  , ("getUnsafe",(getUnsafe 1 1 (initialize 2 3 (,)) == (1,1)))
   , ("getWithDefault 1",(getWithDefault 1 1 (-1,-1) (initialize 2 3 (,)) == (1,1)))
   , ("getWithDefault 1",(getWithDefault 3 1 (-1,-1) (initialize 2 3 (,)) == (-1,-1)))
   , ("set 1",(set 1 1 5 (repeat 2 3 0) == Array.fromList [Array.fromList [0,0,0],Array.fromList [0,5,0]]))
