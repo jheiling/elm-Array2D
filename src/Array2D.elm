@@ -11,7 +11,7 @@ module Array2D where
 @docs get, getUnsafe, getWithDefault, set
 
 # Higher order functions
-@docs foldl
+@docs map, indexedMap, foldl, foldr
 
 # Conversion
 @docs fromArrayWithDefault, fromListWithDefault
@@ -91,12 +91,33 @@ set i j x xs =
     Just ys -> Array.set i (Array.set j x ys) xs
     Nothing -> xs
 
+{-| Apply a function on every element in the array.
+
+    map ((*) 2) (initialize 2 3 (\i j -> i * 2 + j)) == Array.fromList [Array.fromList [0,2,4],Array.fromList [4,6,8]]
+-}
+map : (a -> b) -> Array2D a -> Array2D b
+map f = Array.map (Array.map f)
+
+{-| Apply a function on every element in the array with its index as first and second argument.
+
+    indexedMap (,,) (initialize 2 3 (,)) == Array.fromList [Array.fromList [(0,0,(0,0)),(0,1,(0,1)),(0,2,(0,2))],Array.fromList [(1,0,(1,0)),(1,1,(1,1)),(1,2,(1,2))]]
+-}
+indexedMap : (Int -> Int -> a -> b) -> Array2D a -> Array2D b
+indexedMap f = Array.indexedMap (f >> Array.indexedMap)
+
 {-| Reduce the inner arrays from the left, then reduce the resulting array from the left.
 
     foldl (::) [] (initialize 2 3 (,)) == [(1,2),(1,1),(1,0),(0,2),(0,1),(0,0)]
 -}
 foldl : (a -> b -> b) -> b -> Array2D a -> b
 foldl f = Array.foldl (flip (Array.foldl f))
+
+{-| Reduce the inner arrays from the right, then reduce the resulting array from the right.
+
+    foldr (::) [] (initialize 2 3 (,)) == [(0,0),(0,1),(0,2),(1,0),(1,1),(1,2)]
+-}
+foldr : (a -> b -> b) -> b -> Array2D a -> b
+foldr f = Array.foldr (flip (Array.foldr f))
 
 {- doesn't work, probably a bug in Array.append: https://github.com/elm-lang/core/issues/205
 {-|
