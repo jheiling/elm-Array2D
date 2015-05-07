@@ -132,7 +132,7 @@ foldr f = Array.foldr (flip (Array.foldr f))
 
 {-| Create a 2-dimensional array with the given dimensions, initialized with the elements of the given list.
 If the list is too short the rest is initialized with a default element.
-The order in which the elements are initialized is (0, 0), (0, 1) .. (0, m) .. (n, 0), (n, 1) .. (n, m).
+The order in which the elements are initialized is (0,0),(0,1) .. (0,m) .. (n,0),(n,1) .. (n,m).
 
     fromListWithDefault 2 3 -1 [0,1,2,3] == Array.fromList [Array.fromList [0,1,2],Array.fromList [3,-1,-1]]
 -}
@@ -142,7 +142,7 @@ fromListWithDefault n m def = Array.fromList >> fromArrayWithDefault n m def
 
 {-| Create a 2-dimensional array with the given dimensions, initialized with the elements of the given array.
 If the array is too short the rest is initialized with a default element.
-The order in which the elements are initialized is (0, 0), (0, 1) .. (0, m) .. (n, 0), (n, 1) .. (n, m).
+The order in which the elements are initialized is (0,0),(0,1) .. (0,m) .. (n,0),(n,1) .. (n,m).
 
     fromArrayWithDefault 2 3 -1 (Array.fromList [0,1,2,3]) == Array.fromList [Array.fromList [0,1,2],Array.fromList [3,-1,-1]]
 -}
@@ -151,7 +151,7 @@ fromArrayWithDefault n m def xs = initialize n m (\i j -> Maybe.withDefault def 
 
 
 {-| Create a list from the given array.
-The order of elements is (0, 0), (0, 1) .. (0, m) .. (n, 0), (n, 1) .. (n, m).
+The order of elements is (0,0),(0,1) .. (0,m) .. (n,0),(n,1) .. (n,m).
 
     toList (initialize 2 3 (,)) == [(0,0),(0,1),(0,2),(1,0),(1,1),(1,2)]
 -}
@@ -160,7 +160,7 @@ toList = Array.toList >> List.map Array.toList >> List.concat
 
 
 {-| Create an array from the given 2-dimensional array.
-The order of elements is (0, 0), (0, 1) .. (0, m) .. (n, 0), (n, 1) .. (n, m).
+The order of elements is (0,0),(0,1) .. (0,m) .. (n,0),(n,1) .. (n,m).
 
     toArray (initialize 2 3 (,)) == Array.fromList [(0,0),(0,1),(0,2),(1,0),(1,1),(1,2)]
 -}
