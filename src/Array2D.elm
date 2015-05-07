@@ -8,7 +8,7 @@ module Array2D where
 @docs repeat, initialize
 
 # Size
-@docs length1, length
+@docs size
 
 # Get and Set
 @docs get, getUnsafe, getWithDefault, set
@@ -22,7 +22,7 @@ module Array2D where
 -}
 
 import Array
-import Array (Array)
+import Array exposing (Array)
 import Debug
 import List
 import Maybe
@@ -45,19 +45,12 @@ repeat n m = Array.repeat m >> Array.repeat n
 initialize : Int -> Int -> (Int -> Int -> a) -> Array2D a
 initialize n m f = Array.initialize n (f >> Array.initialize m)
 
-{-| Return the number of elements in the outer array.
-
-    length1 (repeat 2 3 0) == 2
--}
-length1 : Array2D a -> Int
-length1 = Array.length
-
 {-| Return the number of elements in the array.
 
     length (repeat 2 3 0) == 6
 -}
-length : Array2D a -> Int
-length = Array.foldl (Array.length >> (+)) 0
+size : Array2D a -> Int
+size = Array.foldl (Array.length >> (+)) 0
 
 {-| Return Just the element at the index or Nothing if the index is out of range.
 

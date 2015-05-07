@@ -1,15 +1,14 @@
-import Array2D (..)
+import Array2D exposing (..)
 import Array
 import List
-import Graphics.Element (..)
-import Text (..)
+import Graphics.Element exposing (Element, flow, right, down, leftAligned, show)
+import Text exposing (fromString)
 
 main : Element
 main =
   [ ("repeat",(repeat 2 3 0 == Array.fromList [Array.fromList [0,0,0],Array.fromList [0,0,0]]))
   , ("initialize",(initialize 2 3 (,) == Array.fromList [Array.fromList [(0,0),(0,1),(0,2)],Array.fromList [(1,0),(1,1),(1,2)]]))
-  , ("length1",(length1 (repeat 2 3 0) == 2))
-  , ("length",(length (repeat 2 3 0) == 6))
+  , ("size",(size (repeat 2 3 0) == 6))
   , ("get 1",(get 1 1 (initialize 2 3 (,)) == Just (1,1)))
   , ("get 2",(get 3 1 (initialize 2 3 (,)) == Nothing))
   , ("getUnsafe",(getUnsafe 1 1 (initialize 2 3 (,)) == (1,1)))
@@ -26,5 +25,5 @@ main =
   , ("toList",(toList (initialize 2 3 (,)) == [(0,0),(0,1),(0,2),(1,0),(1,1),(1,2)]))
   , ("toArray",(toArray (initialize 2 3 (,)) == Array.fromList [(0,0),(0,1),(0,2),(1,0),(1,1),(1,2)]))
   ]
-  |> List.map (\(t,r) -> flow right [t ++ ": " |> fromString |> leftAligned,asText r])
+  |> List.map (\(t,r) -> flow right [t ++ ": " |> fromString |> leftAligned, show r])
   |> flow down
