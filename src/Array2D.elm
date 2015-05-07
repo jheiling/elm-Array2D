@@ -18,7 +18,6 @@ module Array2D where
 
 # Conversion
 @docs fromListWithDefault, fromArrayWithDefault, toList, toArray
-
 -}
 
 import Array

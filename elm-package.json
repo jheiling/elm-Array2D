@@ -1,16 +1,16 @@
 {
-    "version": "2.0.0",
-    "summary": "Functions for working with 2-dimensional arrays.",
-    "repository": "https://github.com/jheiling/elm-Array2D.git",
-    "license": "MIT",
-    "source-directories": [
-        "src"
-    ],
-    "exposed-modules": [
-      "Array2D"
-    ],
-    "dependencies": {
-        "elm-lang/core": "2.0.0 <= v < 3.0.0"
-    },
-    "elm-version": "0.15.0 <= v < 0.16.0"
+  "version": "2.0.0",
+  "summary": "Functions for working with 2-dimensional jagged arrays.",
+  "repository": "https://github.com/jheiling/elm-Array2D.git",
+  "license": "MIT",
+  "source-directories": [
+    "src"
+  ],
+  "exposed-modules": [
+    "Array2D"
+  ],
+  "dependencies": {
+    "elm-lang/core": "2.0.0 <= v < 3.0.0"
+  },
+  "elm-version": "0.15.0 <= v < 0.16.0"
 }
